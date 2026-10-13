@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gas Distribution · ACO Route Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="frame">
+  <header class="topbar">
+    <nav class="nav">
+      <div class="menu-wrap">
+        <button class="nav-btn" id="btn-menu">☰ Menu</button>
+        <div class="dropdown" id="menu-dd">
+          <button data-act="import">⇪ Import CSV data (data_rute / data_stok)</button>
+          <button data-act="export-json">⤓ Export plan (JSON)</button>
+          <button data-act="export-csv">⤓ Export plan (CSV)</button>
+          <button data-act="clear-edges">⌫ Clear route overrides</button>
+          <button data-act="reset" class="danger">⟲ Reset demo data</button>
+        </div>
+      </div>
+      <button class="nav-btn active" data-nav="dashboard">▦ Dashboard</button>
+      <button class="nav-btn" data-nav="alerts">🔔 Alerts <span class="badge" id="alert-badge">0</span></button>
+      <button class="nav-btn" data-nav="stops">⌖ Stops</button>
+      <button class="nav-btn" data-nav="fleet">⛟ Fleet</button>
+      <button class="nav-btn" data-nav="reports">▤ Reports</button>
+      <button class="nav-btn" data-nav="settings">⚙ Settings</button>
+    </nav>
+    <div class="brand">GAS DISTRIBUTION <i>|</i> <b>ACO ROUTE COMMAND CENTER</b></div>
+    <div class="topright">
+      <span class="status"><i></i> System Status <b id="sys-status">OPERATIONAL</b></span>
+      <div class="user"><span class="avatar">LA</span><div><b>Logistics Analyst</b><small>Dispatch Planner</small></div></div>
+    </div>
+  </header>
+
+  <main class="grid">
+    <!-- LEFT -->
+    <aside class="col">
+      <section class="panel" id="p-fleet">
+        <header><h3>FLEET STATUS</h3><button class="expand" data-expand="fleet" title="Expand to full screen">⤢</button></header>
+        <div id="fleet-body"></div>
+      </section>
+      <section class="panel grow" id="p-urg">
+        <header><h3>STOCK URGENCY</h3><button class="expand" data-expand="urg" title="Expand to full screen">⤢</button></header>
+        <div id="urg-body"></div>
+      </section>
+    </aside>
+
+    <!-- CENTER -->
+    <section class="panel map-panel">
+      <div class="map-head">
+        <div class="mh-title"><h3>OPTIMAL ROUTES</h3><span class="sep">|</span><span id="mh-date"></span></div>
+        <div class="mh-chips" id="mh-chips"></div>
+        <div class="mh-right">
+          <select id="day-filter" title="Filter by day"></select>
+          <label class="chk"><input type="checkbox" id="road-toggle"> Road-snap</label>
+        </div>
+      </div>
+      <div id="map"></div>
+      <div class="map-tools">
+        <button id="t-zoom-in" title="Zoom in">+</button>
+        <button id="t-zoom-out" title="Zoom out">−</button>
+        <button id="t-fit" title="Fit all routes">⤢</button>
+        <button id="t-add" title="Add stop by clicking the map">⊕</button>
+        <button id="t-edit" title="Drag markers to move stops">✥</button>
+      </div>
+      <div class="map-banner" id="map-banner"></div>
+      <div class="map-legend" id="map-legend"></div>
+      <div class="drawer" id="drawer">
+        <div class="drawer-tabs">
+          <button class="active" data-tab="itin">Itinerary</button>
+          <button data-tab="leg">Leg Analyzer</button>
+          <span class="grow-sp"></span>
+          <button id="drawer-toggle" title="Collapse / expand">⌄</button>
+        </div>
+        <div class="drawer-body" id="drawer-body"></div>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+    <aside class="col">
+      <section class="panel" id="p-cost">
+        <header><h3>COST ANALYTICS</h3><button class="expand" data-expand="cost" title="Expand to full screen">⤢</button></header>
+        <div id="cost-body"></div>
+      </section>
+      <section class="panel" id="p-opt">
+        <header><h3>ACO OPTIMIZER</h3><button class="expand" data-expand="opt" title="Expand to full screen">⤢</button></header>
+        <div id="opt-body"></div>
+      </section>
+      <section class="panel" id="p-size">
+        <header><h3>FLEET SIZING</h3><button class="expand" data-expand="size" title="Expand to full screen">⤢</button></header>
+        <div id="size-body"></div>
+      </section>
+      <section class="panel grow" id="p-log">
+        <header><h3>ACTIVITY LOG</h3><button class="expand" data-expand="log" title="Expand to full screen">⤢</button></header>
+        <div id="log-body"></div>
+      </section>
+    </aside>
+  </main>
+</div>
+<div id="modal-root"></div>
+<div id="toasts"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

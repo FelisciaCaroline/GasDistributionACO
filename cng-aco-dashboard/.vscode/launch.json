@@ -1,0 +1,6 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    { "name": "CNG ACO Dashboard", "type": "debugpy", "request": "launch", "program": "${workspaceFolder}/server.py", "console": "integratedTerminal" }
+  ]
+}
